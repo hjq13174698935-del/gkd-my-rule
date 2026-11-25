@@ -1,0 +1,606 @@
+{
+  id: 202611250930,
+  name: '自用规则(非官方): 体重日记 + 下厨房 + 通用开屏',
+  version: 1,
+  author: 'hjq13174698935-del',
+  updateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rules/main/gkd.json5',
+  checkUpdateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rules/main/gkd.version.json',
+  supportUri: 'https://github.com/hjq13174698935-del/gkd-my-rules',
+  categories: [
+    {
+      key: 0,
+      name: '开屏广告',
+    },
+    {
+      key: 1,
+      name: '青少年模式',
+    },
+    {
+      key: 2,
+      name: '更新提示',
+    },
+    {
+      key: 3,
+      name: '评价提示',
+    },
+    {
+      key: 4,
+      name: '通知提示',
+    },
+    {
+      key: 5,
+      name: '定位提示',
+    },
+    {
+      key: -1,
+      name: '权限提示',
+    },
+    {
+      key: 6,
+      name: '局部广告',
+    },
+    {
+      key: 7,
+      name: '全屏广告',
+    },
+    {
+      key: 8,
+      name: '分段广告',
+    },
+    {
+      key: 9,
+      name: '功能类',
+    },
+  ],
+  globalGroups: [
+    {
+      key: 0,
+      name: '开屏广告',
+      desc: '通用开屏广告跳过，匹配常见「跳过」文案与倒计时控件',
+      order: -1,
+      actionMaximum: 2,
+      matchTime: 10000,
+      resetMatch: 'app',
+      actionCdKey: 0,
+      actionMaximumKey: 0,
+      rules: [
+        {
+          key: 0,
+          matches: '[text*="跳过"][text.length<10][visibleToUser=true]',
+        },
+        {
+          key: 1,
+          matches: '[childCount=0][visibleToUser=true][(text.length<10&&(text*="跳过"||text*="跳過"||text*="skip"||text*="Skip")) || id$="tt_splash_skip_btn" || vid*="skip" || vid*="Skip" || (vid*="count" && vid*="down" && vid!*="download") || desc*="跳过" || desc*="skip"]',
+        },
+        {
+          key: 2,
+          matches: '[text*="跳过广告"][text.length<10][visibleToUser=true]',
+        },
+        {
+          key: 3,
+          matches: '[text^="跳过"][text.length<8][visibleToUser=true][width<300]',
+        },
+        {
+          key: 4,
+          matches: '[visibleToUser=true][(vid*="splash"&&vid*="skip")||(vid*="skip"&&vid*="splash")]',
+        },
+      ],
+      apps: [
+        {
+          id: 'com.android.systemui',
+          enable: false,
+        },
+        {
+          id: 'com.android.settings',
+          enable: false,
+        },
+        {
+          id: 'com.miui.aod',
+          enable: false,
+        },
+        {
+          id: 'miui.systemui.plugin',
+          enable: false,
+        },
+        {
+          id: 'com.tencent.mm',
+          enable: false,
+        },
+        {
+          id: 'li.songe.gkd',
+          enable: false,
+        },
+        {
+          id: 'mark.via',
+          enable: false,
+        },
+        {
+          id: 'com.mycompany.app.soulbrowser',
+          enable: false,
+        },
+        {
+          id: 'com.mmbox.xbrowser',
+          enable: false,
+        },
+        {
+          id: 'com.kproduce.weight',
+          enable: false,
+        },
+        {
+          id: 'com.xiachufang',
+          enable: false,
+        },
+      ],
+    },
+  ],
+  apps: [
+    {
+      id: 'com.kproduce.weight',
+      name: '体重日记',
+      groups: [
+        {
+          key: 0,
+          name: '开屏广告',
+          desc: '跳过开屏广告(SplashActivity/HotSplashActivity)',
+          activityIds: [
+            'com.kproduce.weight.ui.activity.SplashActivity',
+            'com.kproduce.weight.ui.activity.HotSplashActivity',
+          ],
+          actionMaximum: 3,
+          matchTime: 10000,
+          resetMatch: 'app',
+          rules: [
+            {
+              key: 0,
+              matches: '[vid="tv_skip"]',
+            },
+            {
+              key: 1,
+              matches: '[vid="adky_myoffer_splash_skip"]',
+            },
+            {
+              key: 2,
+              matches: '[vid="adky_myoffer_splash_skip_area"]',
+            },
+            {
+              key: 3,
+              matches: '[vid="cj_splash_skip_ll"]',
+            },
+            {
+              key: 4,
+              matches: '[vid="cj_splash_skip_text"]',
+            },
+            {
+              key: 5,
+              matches: '[vid="ptgSplashSkipFl"]',
+            },
+            {
+              key: 6,
+              matches: '[vid="ptgSkipLayout"]',
+            },
+            {
+              key: 7,
+              matches: '[vid="ptgImgClose"]',
+            },
+            {
+              key: 8,
+              matches: '[vid="tv_time"]',
+              action: 'clickCenter',
+            },
+            {
+              key: 9,
+              matches: '[vid="tv_count"]',
+              action: 'clickCenter',
+            },
+            {
+              key: 10,
+              matches: '[vid="adky_myoffer_count_down_view_id"]',
+            },
+            {
+              key: 11,
+              matches: '[vid="adky_myoffer_btn_countdown_close_id"]',
+            },
+            {
+              key: 12,
+              matches: '[vid="ptg_top_countdown"]',
+            },
+            {
+              key: 13,
+              matches: '[text*="跳过"][text.length<10][visibleToUser=true]',
+              action: 'clickCenter',
+            },
+            {
+              key: 14,
+              matches: '[text*="跳過"][text.length<10][visibleToUser=true]',
+              action: 'clickCenter',
+            },
+            {
+              key: 15,
+              matches: '[text="skip"][visibleToUser=true]',
+              action: 'clickCenter',
+            },
+            {
+              key: 16,
+              matches: '[text*="关闭广告"][text.length<10][visibleToUser=true]',
+              action: 'clickCenter',
+            },
+            {
+              key: 17,
+              matches: '[visibleToUser=true][(vid*="splash"&&vid*="skip")||(vid*="skip"&&vid*="splash")]',
+            },
+          ],
+        },
+        {
+          key: 1,
+          name: '局部广告-信息流横幅',
+          desc: '关闭穿山甲(adky)/优量汇(cj)等聚合广告卡片上的关闭按钮',
+          rules: [
+            {
+              key: 0,
+              matches: '[vid="adky_myoffer_banner_close"]',
+            },
+            {
+              key: 1,
+              matches: '[vid="adky_myoffer_btn_close_id"]',
+            },
+            {
+              key: 2,
+              matches: '[vid="adky_myoffer_btn_close_ch_id"]',
+            },
+            {
+              key: 3,
+              matches: '[vid="adky_myoffer_btn_close_header_view_id"]',
+            },
+            {
+              key: 4,
+              matches: '[vid="adky_myoffer_inctask_close_view"]',
+            },
+            {
+              key: 5,
+              matches: '[vid="adky_myoffer_g2c_item_close_iv"]',
+            },
+            {
+              key: 6,
+              matches: '[vid="adky_base_media_ad_close"]',
+            },
+            {
+              key: 7,
+              matches: '[vid="cj_iv_close"]',
+            },
+            {
+              key: 8,
+              matches: '[vid="cj_fb_close"]',
+            },
+            {
+              key: 9,
+              matches: '[vid="cj_fb_rb_close"]',
+            },
+            {
+              key: 10,
+              matches: '[vid="ptg_close_iv"]',
+            },
+            {
+              key: 11,
+              matches: '[vid="ptg_img_close"]',
+            },
+            {
+              key: 12,
+              matches: '[vid="closeAdvertLayout"]',
+            },
+          ],
+        },
+        {
+          key: 2,
+          name: '全屏广告-插屏激励',
+          desc: '关闭插屏、激励视频结束后残留的全屏广告',
+          rules: [
+            {
+              key: 0,
+              matches: '[vid="cj_interstitial_close_ll"]',
+            },
+            {
+              key: 1,
+              matches: '[vid="cj_interstitial_skip_ll"]',
+            },
+            {
+              key: 2,
+              matches: '[vid="cj_reward_close_iv"]',
+            },
+            {
+              key: 3,
+              matches: '[vid="cj_reward_skip_button"]',
+            },
+            {
+              key: 4,
+              matches: '[vid="ptg_close_layout"]',
+            },
+            {
+              key: 5,
+              matches: '[text="关闭广告"]',
+            },
+            {
+              key: 6,
+              matches: '[text*="跳过广告"][text.length<10]',
+            },
+          ],
+        },
+        {
+          key: 3,
+          name: '功能类-外卖锁拦截页',
+          desc: '退出「外卖锁」全屏拦截页(TakeawayLockActivity)，回到被拦截的应用',
+          activityIds: [
+            'com.kproduce.weight.takeaway.TakeawayLockActivity',
+          ],
+          rules: [
+            {
+              key: 0,
+              matches: '[vid="takeaway_back"]',
+              action: 'click',
+            },
+            {
+              key: 1,
+              matches: '[text="记录更好的自己"]',
+              action: 'back',
+            },
+            {
+              key: 2,
+              matches: '[text="返回桌面"]',
+              action: 'back',
+            },
+            {
+              key: 3,
+              matches: '[text^="暂时限制使用"]',
+              action: 'back',
+            },
+          ],
+        },
+        {
+          key: 4,
+          name: '功能类-升级付费弹窗',
+          desc: '关闭会员升级、AI 版解锁等付费引导弹窗(默认关闭)',
+          enable: false,
+          actionMaximum: 1,
+          rules: [
+            {
+              key: 0,
+              matches: '[text="升级高级账户"]',
+              action: 'back',
+            },
+            {
+              key: 1,
+              matches: '[text="开通 AI 版解锁"]',
+              action: 'back',
+            },
+            {
+              key: 2,
+              matches: '[text="马上升级"]',
+              action: 'back',
+            },
+          ],
+        },
+        {
+          key: 5,
+          name: '更新提示',
+          desc: '点击「稍后再说」跳过强制更新(默认关闭)',
+          enable: false,
+          actionMaximum: 1,
+          rules: [
+            {
+              key: 0,
+              matches: '[text="稍后再说"]',
+            },
+            {
+              key: 1,
+              matches: '[vid="btn_later"]',
+            },
+          ],
+        },
+        {
+          key: 6,
+          name: '评价提示',
+          desc: '点击「残忍拒绝」关闭应用商店评分弹窗(默认关闭)',
+          enable: false,
+          actionMaximum: 1,
+          rules: [
+            {
+              key: 0,
+              matches: '[text="残忍拒绝"]',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'com.xiachufang',
+      name: '下厨房',
+      groups: [
+        {
+          key: 0,
+          name: '开屏广告',
+          desc: '跳过启动页开屏广告(StartPageActivity)：自家 SplashViewGroup + 穿山甲/优量汇/快手/百灵/京东 聚合',
+          activityIds: [
+            'com.xiachufang.startpage.ui.StartPageActivity',
+          ],
+          actionMaximum: 3,
+          matchTime: 10000,
+          resetMatch: 'app',
+          rules: [
+            {
+              key: 0,
+              matches: '[vid="start_page_count_down_tv"]',
+            },
+            {
+              key: 1,
+              matches: '[vid="jad_splash_skip_btn"]',
+            },
+            {
+              key: 2,
+              matches: '[vid="ksad_splash_skip_left_view"]',
+            },
+            {
+              key: 3,
+              matches: '[vid="ksad_splash_skip_right_view"]',
+            },
+            {
+              key: 4,
+              matches: '[vid="ksad_splash_circle_skip_left_view"]',
+            },
+            {
+              key: 5,
+              matches: '[vid="ksad_splash_circle_skip_right_view"]',
+            },
+            {
+              key: 6,
+              matches: '[vid="bsyad_plg_btn_skip_countdown"]',
+            },
+            {
+              key: 7,
+              matches: '[vid="bsyad_plg_tv_skip"]',
+            },
+            {
+              key: 8,
+              matches: '[vid="bsyad_plg_btn_circle_skip"]',
+            },
+            {
+              key: 9,
+              matches: '[vid="my_txt_skip"]',
+            },
+            {
+              key: 10,
+              matches: '[vid="tv_count"][visibleToUser=true]',
+            },
+            {
+              key: 11,
+              matches: '[text*="跳过"][text.length<10][visibleToUser=true][width<300]',
+            },
+            {
+              key: 12,
+              matches: '[text*="跳过"][text.length<10][visibleToUser=true]',
+            },
+            {
+              key: 13,
+              matches: '[text*="跳過"][text.length<10][visibleToUser=true]',
+            },
+            {
+              key: 14,
+              matches: '[visibleToUser=true][(vid*="splash"&&vid*="skip")||(vid*="skip"&&vid*="splash")]',
+            },
+            {
+              key: 15,
+              matches: '[visibleToUser=true][vid*="skip"][vid*="count"]',
+            },
+          ],
+        },
+        {
+          key: 1,
+          name: '局部广告-信息流卡片',
+          desc: '菜谱详情页/首页信息流广告卡片关闭按钮',
+          rules: [
+            {
+              key: 0,
+              matches: '[vid="ad_close"][visibleToUser=true]',
+            },
+            {
+              key: 1,
+              matches: '[vid="jad_feed_close"][visibleToUser=true]',
+            },
+            {
+              key: 2,
+              matches: '[vid="my_txt_close"][visibleToUser=true]',
+            },
+            {
+              key: 3,
+              matches: '[vid="ly_txt_close"][visibleToUser=true]',
+            },
+            {
+              key: 4,
+              matches: '[vid="ad_app_download_close"][visibleToUser=true]',
+            },
+            {
+              key: 5,
+              matches: '[vid="beizi_close"][visibleToUser=true]',
+            },
+            {
+              key: 6,
+              matches: '[vid="tv_custom"][visibleToUser=true]',
+            },
+            {
+              key: 7,
+              matches: '[vid="fl_container"] >6 [name="android.widget.ImageView" && width=32]',
+            },
+            {
+              key: 8,
+              matches: '[vid="tt_item_tv"][text="不感兴趣"]',
+            },
+          ],
+        },
+        {
+          key: 2,
+          name: '全屏广告-插屏激励',
+          desc: '插屏/激励视频结束页关闭',
+          rules: [
+            {
+              key: 0,
+              matches: '[vid="ksad_skip_view_skip"]',
+            },
+            {
+              key: 1,
+              matches: '[vid="ksad_skip_view_area"]',
+            },
+            {
+              key: 2,
+              matches: '[vid="beizi_interstitial_ad_close_iv"]',
+            },
+            {
+              key: 3,
+              matches: '[text="关闭广告"][visibleToUser=true]',
+            },
+            {
+              key: 4,
+              matches: '[text*="跳过广告"][text.length<10][visibleToUser=true]',
+            },
+          ],
+        },
+        {
+          key: 3,
+          name: '功能类-厨房问卷',
+          desc: '菜谱详情页厨房问卷浮层',
+          rules: [
+            {
+              key: 0,
+              matches: '[text^="厨房问卷"] + [desc="关闭"]',
+            },
+          ],
+        },
+        {
+          key: 4,
+          name: '更新提示',
+          enable: false,
+          actionMaximum: 1,
+          rules: [
+            {
+              key: 0,
+              matches: '[text="以后再说"]',
+            },
+            {
+              key: 1,
+              matches: '[text="忽略该版"]',
+            },
+          ],
+        },
+        {
+          key: 5,
+          name: '评价提示',
+          enable: false,
+          actionMaximum: 1,
+          rules: [
+            {
+              key: 0,
+              matches: '[text="残忍拒绝"]',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}

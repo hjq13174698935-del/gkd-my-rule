@@ -1,0 +1,16 @@
+{
+  "name": "gkd-my-rules",
+  "private": true,
+  "description": "个人自用 GKD 规则订阅（体重日记 / 下厨房 / 通用开屏）",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "gen": "node gen-sub.mjs"
+  },
+  "devDependencies": {
+    "@gkd-kit/selector": "0.6.1",
+    "json5": "2.2.3",
+    "regex-wasm": "0.1.1"
+  }
+}
