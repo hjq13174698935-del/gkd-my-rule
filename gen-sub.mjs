@@ -25,11 +25,12 @@ const CATEGORIES = [
 const read = (p) => JSON5.parse(fs.readFileSync(path.join(SRC, p), 'utf8'));
 const kp = read('gkd-rules-kproduce/app-rule.json5');
 const xcf = read('gkd-rules-xiachufang/app-rule.json5');
+const fish = read('gkd-rules-idlefish/app-rule.json5');
 const glb = read('gkd-rules-global/global-rule.json5');
 
-// 全局规则里的 apps 追加两个已有专用规则的包
+// 全局规则里的 apps 追加已有专用规则的包
 const disabled = new Set(glb.apps.map((a) => a.id));
-for (const id of [kp.id, xcf.id]) {
+for (const id of [kp.id, xcf.id, fish.id]) {
   if (!disabled.has(id)) glb.apps.push({ id, enable: false });
 }
 
@@ -45,7 +46,7 @@ const sub = {
   supportUri: process.env.SUB_SUPPORT || 'https://gkd.li/',
   categories: CATEGORIES,
   globalGroups: [glb],
-  apps: [kp, xcf],
+  apps: [kp, xcf, fish],
 };
 
 // ---- 校验 ----

@@ -1,7 +1,7 @@
 {
   id: 202611250930,
   name: '自用规则',
-  version: 2,
+  version: 3,
   author: 'hjq13174698935-del',
   updateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rule/main/gkd.json5',
   checkUpdateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rule/main/gkd.version.json',
@@ -128,6 +128,10 @@
         },
         {
           id: 'com.xiachufang',
+          enable: false,
+        },
+        {
+          id: 'com.taobao.idlefish',
           enable: false,
         },
       ],
@@ -597,6 +601,192 @@
             {
               key: 0,
               matches: '[text="残忍拒绝"]',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'com.taobao.idlefish',
+      name: '闲鱼',
+      groups: [
+        {
+          key: 0,
+          name: '开屏广告',
+          desc: '跳过闲鱼启动页开屏广告(SplashAdActivity/InitActivity)：自家 splash_ad_* + 快手 ksad_* + fanti_* 聚合',
+          activityIds: [
+            'com.taobao.fleamarket.splashad.SplashAdActivity',
+            'com.taobao.fleamarket.home.activity.InitActivity',
+          ],
+          actionMaximum: 3,
+          matchTime: 12000,
+          resetMatch: 'app',
+          rules: [
+            {
+              key: 0,
+              matches: '[vid="splash_ad_close"]',
+            },
+            {
+              key: 1,
+              matches: '[vid="tv_skip"]',
+            },
+            {
+              key: 2,
+              matches: '[vid="fanti_ad_txt_skip"]',
+            },
+            {
+              key: 3,
+              matches: '[vid="fanti_ad_count_and_skip_container"]',
+            },
+            {
+              key: 4,
+              matches: '[vid="fanti_ad_count_and_skip_container_ex"]',
+            },
+            {
+              key: 5,
+              matches: '[vid="ksad_skip_view_skip"]',
+            },
+            {
+              key: 6,
+              matches: '[vid="ksad_skip_view_area"]',
+            },
+            {
+              key: 7,
+              matches: '[vid="ksad_skip_view_timer"]',
+            },
+            {
+              key: 8,
+              matches: '[vid="ksad_splash_skip_left_view"]',
+            },
+            {
+              key: 9,
+              matches: '[vid="ksad_splash_skip_right_view"]',
+            },
+            {
+              key: 10,
+              matches: '[vid="ksad_splash_circle_skip_left_view"]',
+            },
+            {
+              key: 11,
+              matches: '[vid="ksad_splash_circle_skip_right_view"]',
+            },
+            {
+              key: 12,
+              matches: '[vid="ksad_skip_icon"]',
+            },
+            {
+              key: 13,
+              matches: '[text*="跳过广告"][text.length<10][visibleToUser=true]',
+              action: 'clickCenter',
+            },
+            {
+              key: 14,
+              matches: '[text*="跳过"][text.length<10][visibleToUser=true][width<400]',
+              action: 'clickCenter',
+            },
+            {
+              key: 15,
+              matches: '[text*="跳过"][text.length<10][visibleToUser=true]',
+              action: 'clickCenter',
+            },
+            {
+              key: 16,
+              matches: '[text*="跳過"][text.length<10][visibleToUser=true]',
+              action: 'clickCenter',
+            },
+            {
+              key: 17,
+              matches: '[visibleToUser=true][(vid*="splash"&&vid*="skip")||(vid*="skip"&&vid*="splash")]',
+            },
+            {
+              key: 18,
+              matches: '[visibleToUser=true][vid*="skip"][vid*="timer"]',
+            },
+          ],
+        },
+        {
+          key: 1,
+          name: '局部广告-信息流卡片',
+          desc: '首页/搜索结果信息流广告卡片的关闭按钮',
+          rules: [
+            {
+              key: 0,
+              matches: '[vid="advert_suspend_countdown"]',
+            },
+            {
+              key: 1,
+              matches: '[vid="advert_suspend_countdown_layout"]',
+            },
+            {
+              key: 2,
+              matches: '[text="不感兴趣"][visibleToUser=true]',
+            },
+            {
+              key: 3,
+              matches: '[text="关闭广告"][visibleToUser=true]',
+            },
+            {
+              key: 4,
+              matches: '[vid="splash_end_card_view"]',
+            },
+          ],
+        },
+        {
+          key: 2,
+          name: '全屏广告-插屏激励',
+          desc: '插屏/激励视频结束页关闭',
+          rules: [
+            {
+              key: 0,
+              matches: '[vid="beizi_interstitial_ad_countdown_tv"]',
+            },
+            {
+              key: 1,
+              matches: '[vid="beizi_reward_video_privilege_dialog_countdown_tv"]',
+            },
+            {
+              key: 2,
+              matches: '[text="关闭广告"][visibleToUser=true]',
+            },
+            {
+              key: 3,
+              matches: '[text*="跳过广告"][text.length<10][visibleToUser=true]',
+            },
+          ],
+        },
+        {
+          key: 3,
+          name: '更新提示',
+          enable: false,
+          actionMaximum: 1,
+          rules: [
+            {
+              key: 0,
+              matches: '[text="以后再说"]',
+            },
+            {
+              key: 1,
+              matches: '[text="暂不更新"]',
+            },
+            {
+              key: 2,
+              matches: '[text="忽略该版本"]',
+            },
+          ],
+        },
+        {
+          key: 4,
+          name: '评价提示',
+          enable: false,
+          actionMaximum: 1,
+          rules: [
+            {
+              key: 0,
+              matches: '[text="残忍拒绝"]',
+            },
+            {
+              key: 1,
+              matches: '[text="以后再说"]',
             },
           ],
         },
