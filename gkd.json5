@@ -3,9 +3,9 @@
   name: '自用规则(非官方): 体重日记 + 下厨房 + 通用开屏',
   version: 1,
   author: 'hjq13174698935-del',
-  updateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rules/main/gkd.json5',
-  checkUpdateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rules/main/gkd.version.json',
-  supportUri: 'https://github.com/hjq13174698935-del/gkd-my-rules',
+  updateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rule/main/gkd.json5',
+  checkUpdateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rule/main/gkd.version.json',
+  supportUri: 'https://github.com/hjq13174698935-del/gkd-my-rule',
   categories: [
     {
       key: 0,
