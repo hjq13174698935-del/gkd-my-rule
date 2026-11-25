@@ -20,7 +20,7 @@ https://raw.githubusercontent.com/<你的用户名>/gkd-my-rules/main/gkd.json5
 | --- | --- | --- | --- |
 | 全局（所有应用） | 1 | 5 | 通用开屏广告跳过，排除 11 个易误触应用 |
 | 体重日记 `com.kproduce.weight` | 7 | 48 | 开屏/信息流/插屏广告 + 外卖锁拦截页退出 |
-| 下厨房 `com.xiachufang` | 6 | 39 | 开屏（5 家广告 SDK）/信息流/插屏广告 |
+| 下厨房 `com.xiachufang` | 6 | 34 | 开屏（5 家广告 SDK）/信息流/插屏广告 |
 
 合计 **87 条规则**。
 
