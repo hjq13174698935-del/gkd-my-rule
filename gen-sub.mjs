@@ -37,7 +37,7 @@ const VERSION = Number(process.env.SUB_VERSION || 1);
 
 const sub = {
   id: 202611250930,
-  name: '自用规则(非官方): 体重日记 + 下厨房 + 通用开屏',
+  name: process.env.SUB_NAME || '自用规则',
   version: VERSION,
   author: process.env.SUB_AUTHOR || 'local',
   updateUrl: process.env.SUB_URL || undefined,
