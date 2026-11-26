@@ -43,10 +43,14 @@ const REPO = process.env.GKD_REPO || 'hjq13174698935-del/gkd-my-rule';
 
 let remoteVersion = 0;
 try {
+  // 用 Contents API（Accept: raw）直读仓库真实内容，绕开 raw CDN 缓存
   const r = await fetch(
-    `https://raw.githubusercontent.com/${REPO}/main/gkd.version.json`,
+    `https://api.github.com/repos/${REPO}/contents/gkd.version.json?ref=main`,
     {
-      headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {},
+      headers: {
+        Accept: 'application/vnd.github.raw+json',
+        ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
+      },
       signal: AbortSignal.timeout(15000),
     },
   );
