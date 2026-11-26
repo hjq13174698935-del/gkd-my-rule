@@ -34,7 +34,35 @@ for (const id of [kp.id, xcf.id, fish.id]) {
   if (!disabled.has(id)) glb.apps.push({ id, enable: false });
 }
 
-const VERSION = Number(process.env.SUB_VERSION || 1);
+// 版本号从远端仓库的 gkd.version.json 自动 +1（用 Node fetch，绕开 curl 的 schannel 问题）
+const TOKEN_FILE = path.join('D:\\', 'Harness', 'token.txt');
+const TOKEN = fs.existsSync(TOKEN_FILE)
+  ? fs.readFileSync(TOKEN_FILE, 'utf8').trim()
+  : (process.env.GKD_GITHUB_TOKEN || '').trim();
+const REPO = process.env.GKD_REPO || 'hjq13174698935-del/gkd-my-rule';
+
+let remoteVersion = 0;
+try {
+  const r = await fetch(
+    `https://raw.githubusercontent.com/${REPO}/main/gkd.version.json`,
+    {
+      headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {},
+      signal: AbortSignal.timeout(15000),
+    },
+  );
+  if (r.ok) {
+    const j = JSON.parse(await r.text());
+    remoteVersion = Number(j.version) || 0;
+    console.log('remote version =', remoteVersion);
+  } else {
+    console.log('remote version fetch status', r.status);
+  }
+} catch (e) {
+  console.log('remote version unreadable, fallback to 1:', e.message);
+}
+
+const VERSION =
+  Number(process.env.SUB_VERSION) || Math.max(1, remoteVersion + 1);
 
 const sub = {
   id: 202611250930,

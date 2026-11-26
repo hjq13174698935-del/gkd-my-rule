@@ -1,11 +1,9 @@
 {
   id: 202611250930,
   name: '自用规则',
-  version: 4,
-  author: 'hjq13174698935-del',
-  updateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rule/main/gkd.json5',
-  checkUpdateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rule/main/gkd.version.json',
-  supportUri: 'https://github.com/hjq13174698935-del/gkd-my-rule',
+  version: 5,
+  author: 'local',
+  supportUri: 'https://gkd.li/',
   categories: [
     {
       key: 0,
@@ -613,11 +611,7 @@
         {
           key: 0,
           name: '开屏广告',
-          desc: '跳过闲鱼启动页开屏广告(SplashAdActivity/InitActivity)：自家 splash_ad_* + 快手 ksad_* + fanti_* 聚合',
-          activityIds: [
-            'com.taobao.fleamarket.splashad.SplashAdActivity',
-            'com.taobao.fleamarket.home.activity.InitActivity',
-          ],
+          desc: '跳过闲鱼启动页开屏广告：自家 splash_ad_* + 快手 ksad_* + 凡泰 fanti_* 聚合。不限定 Activity（广告可能由 SDK 透明 Activity 承载）',
           actionMaximum: 3,
           matchTime: 12000,
           resetMatch: 'app',
