@@ -65,17 +65,24 @@ const pushUrl = `https://oauth2:${TOKEN}@github.com/${REPO}.git`;
 run(`"${GIT}" -c credential.helper= push "${pushUrl}" main`);
 
 step('3/3 验证远端');
+// 用 Contents API 直读仓库真实内容，绕开 raw CDN 缓存
 const check = async () => {
   const r = await fetch(
-    `https://raw.githubusercontent.com/${REPO}/main/gkd.version.json`,
-    { headers: { Authorization: `Bearer ${TOKEN}` }, signal: AbortSignal.timeout(20000) },
+    `https://api.github.com/repos/${REPO}/contents/gkd.version.json?ref=main`,
+    {
+      headers: {
+        Accept: 'application/vnd.github.raw+json',
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      signal: AbortSignal.timeout(20000),
+    },
   );
   return await r.text();
 };
 const remoteV = (await check()).trim();
-console.log('远端 gkd.version.json =', remoteV);
+console.log('远端(仓库) gkd.version.json =', remoteV);
 if (remoteV.includes(`"version":${V}`)) {
   console.log(`✅ 发布成功 v${V}：手机上 GKD → 订阅 → 对「自用规则」点「检查更新」`);
 } else {
-  console.log('⚠️ 远端可能仍被 CDN 缓存，几分钟后再检查；push 本身已成功');
+  console.log('⚠️ 仓库内容未更新，请检查 push 是否成功');
 }
