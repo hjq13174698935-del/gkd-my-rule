@@ -1,7 +1,7 @@
 {
   id: 202611250930,
   name: '自用规则',
-  version: 2,
+  version: 3,
   author: 'local',
   supportUri: 'https://gkd.li/',
   categories: [

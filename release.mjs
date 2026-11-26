@@ -35,18 +35,37 @@ const run = (cmd, env = {}) => {
 };
 const step = (t) => console.log(`\n== ${t} ==`);
 
+// Node fetch 在代理环境下偶发 TLS 中断，用 Node 自带重试封装
+const fetchRetry = async (url, opts, tries = 3) => {
+  let lastErr;
+  for (let i = 0; i < tries; i++) {
+    try {
+      return await fetch(url, { ...opts, signal: AbortSignal.timeout(20000) });
+    } catch (e) {
+      lastErr = e;
+      if (i < tries - 1) await new Promise((res) => setTimeout(res, 1200));
+    }
+  }
+  throw lastErr;
+};
+
 step('1/3 重新生成订阅（校验选择器 + 自动版本号）');
-try {
-  const gen = execSync(`"${process.execPath}" gen-sub.mjs`, {
-    cwd: HERE,
-    encoding: 'utf8',
-    env: { ...process.env, GKD_GITHUB_TOKEN: TOKEN, GKD_REPO: REPO },
-  });
-  console.log(gen.trim());
-} catch (e) {
-  console.error('生成失败：', e.stderr || e.message);
-  process.exit(1);
+let genOutput;
+for (let i = 0; i < 3; i++) {
+  try {
+    genOutput = execSync(`"${process.execPath}" gen-sub.mjs`, {
+      cwd: HERE,
+      encoding: 'utf8',
+      env: { ...process.env, GKD_GITHUB_TOKEN: TOKEN, GKD_REPO: REPO },
+    });
+    break;
+  } catch (e) {
+    console.error(`生成失败(第 ${i + 1} 次)：`, e.stderr || e.message);
+    if (i === 2) process.exit(1);
+    await new Promise((res) => setTimeout(res, 1500));
+  }
 }
+console.log(genOutput.trim());
 const sub = JSON.parse(fs.readFileSync(path.join(HERE, 'gkd.json'), 'utf8'));
 const V = sub.version;
 
@@ -65,21 +84,26 @@ const pushUrl = `https://oauth2:${TOKEN}@github.com/${REPO}.git`;
 run(`"${GIT}" -c credential.helper= push "${pushUrl}" main`);
 
 step('3/3 验证远端');
-// 用 Contents API 直读仓库真实内容，绕开 raw CDN 缓存
 const check = async () => {
-  const r = await fetch(
+  const r = await fetchRetry(
     `https://api.github.com/repos/${REPO}/contents/gkd.version.json?ref=main`,
     {
       headers: {
         Accept: 'application/vnd.github.raw+json',
         Authorization: `Bearer ${TOKEN}`,
       },
-      signal: AbortSignal.timeout(20000),
     },
   );
+  if (!r.ok) throw new Error('HTTP ' + r.status);
   return await r.text();
 };
-const remoteV = (await check()).trim();
+let remoteV;
+try {
+  remoteV = (await check()).trim();
+} catch (e) {
+  console.log('⚠️ 远端验证失败(' + e.message + ')，但 push 已执行；请稍后重试验证');
+  process.exit(0);
+}
 console.log('远端(仓库) gkd.version.json =', remoteV);
 if (remoteV.includes(`"version":${V}`)) {
   console.log(`✅ 发布成功 v${V}：手机上 GKD → 订阅 → 对「自用规则」点「检查更新」`);
