@@ -1,7 +1,7 @@
 {
   id: 202611250930,
   name: '自用规则',
-  version: 3,
+  version: 4,
   author: 'hjq13174698935-del',
   updateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rule/main/gkd.json5',
   checkUpdateUrl: 'https://raw.githubusercontent.com/hjq13174698935-del/gkd-my-rule/main/gkd.version.json',
@@ -145,91 +145,91 @@
         {
           key: 0,
           name: '开屏广告',
-          desc: '跳过开屏广告(SplashActivity/HotSplashActivity)',
-          activityIds: [
-            'com.kproduce.weight.ui.activity.SplashActivity',
-            'com.kproduce.weight.ui.activity.HotSplashActivity',
-          ],
+          desc: '跳过开屏/热启动开屏，不限定 Activity（兼容各广告 SDK 自带透明 Activity 承载）',
           actionMaximum: 3,
           matchTime: 10000,
           resetMatch: 'app',
           rules: [
             {
               key: 0,
-              matches: '[vid="tv_skip"]',
+              matches: '[vid="ptgSplashSkipFl"]',
+              action: 'clickCenter',
             },
             {
               key: 1,
-              matches: '[vid="adky_myoffer_splash_skip"]',
+              matches: '[vid="ptgSkipLayout"]',
+              action: 'clickCenter',
             },
             {
               key: 2,
-              matches: '[vid="adky_myoffer_splash_skip_area"]',
+              matches: '[vid="ptgSplashSec"]',
+              action: 'clickCenter',
             },
             {
               key: 3,
-              matches: '[vid="cj_splash_skip_ll"]',
-            },
-            {
-              key: 4,
-              matches: '[vid="cj_splash_skip_text"]',
-            },
-            {
-              key: 5,
-              matches: '[vid="ptgSplashSkipFl"]',
-            },
-            {
-              key: 6,
-              matches: '[vid="ptgSkipLayout"]',
-            },
-            {
-              key: 7,
-              matches: '[vid="ptgImgClose"]',
-            },
-            {
-              key: 8,
               matches: '[vid="tv_time"]',
               action: 'clickCenter',
             },
             {
+              key: 4,
+              matches: '[vid="adky_myoffer_splash_skip"]',
+              action: 'clickCenter',
+            },
+            {
+              key: 5,
+              matches: '[vid="adky_myoffer_splash_skip_area"]',
+              action: 'clickCenter',
+            },
+            {
+              key: 6,
+              matches: '[vid="adky_myoffer_count_down_view_id"]',
+              action: 'clickCenter',
+            },
+            {
+              key: 7,
+              matches: '[vid="adky_myoffer_btn_countdown_close_id"]',
+              action: 'clickCenter',
+            },
+            {
+              key: 8,
+              matches: '[vid="cj_splash_skip_ll"]',
+              action: 'clickCenter',
+            },
+            {
               key: 9,
-              matches: '[vid="tv_count"]',
+              matches: '[vid="cj_splash_skip_text"]',
               action: 'clickCenter',
             },
             {
               key: 10,
-              matches: '[vid="adky_myoffer_count_down_view_id"]',
+              matches: '[vid="ptgImgClose"]',
             },
             {
               key: 11,
-              matches: '[vid="adky_myoffer_btn_countdown_close_id"]',
+              matches: '[vid="tv_skip"]',
             },
             {
               key: 12,
-              matches: '[vid="ptg_top_countdown"]',
-            },
-            {
-              key: 13,
               matches: '[text*="跳过"][text.length<10][visibleToUser=true]',
               action: 'clickCenter',
             },
             {
-              key: 14,
+              key: 13,
               matches: '[text*="跳過"][text.length<10][visibleToUser=true]',
               action: 'clickCenter',
             },
             {
-              key: 15,
-              matches: '[text="skip"][visibleToUser=true]',
+              key: 14,
+              matches: '[text="skip"][text.length<10][visibleToUser=true]',
               action: 'clickCenter',
             },
             {
-              key: 16,
+              key: 15,
               matches: '[text*="关闭广告"][text.length<10][visibleToUser=true]',
               action: 'clickCenter',
             },
             {
-              key: 17,
+              key: 16,
               matches: '[visibleToUser=true][(vid*="splash"&&vid*="skip")||(vid*="skip"&&vid*="splash")]',
             },
           ],
