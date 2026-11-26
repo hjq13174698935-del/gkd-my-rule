@@ -37,27 +37,36 @@ const TOKEN = fs.existsSync(TOKEN_FILE)
 const REPO = process.env.GKD_REPO || 'hjq13174698935-del/gkd-my-rule';
 
 let remoteVersion = 0;
+// 先读本地工作区的 gkd.version.json（上次发布的真实版本），保证离线可用
 try {
-  // 用 Contents API（Accept: raw）直读仓库真实内容，绕开 raw CDN 缓存
-  const r = await fetch(
-    `https://api.github.com/repos/${REPO}/contents/gkd.version.json?ref=main`,
-    {
-      headers: {
-        Accept: 'application/vnd.github.raw+json',
-        ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
-      },
-      signal: AbortSignal.timeout(15000),
-    },
+  const local = JSON.parse(
+    fs.readFileSync(path.join(HERE, 'gkd.version.json'), 'utf8'),
   );
-  if (r.ok) {
-    const j = JSON.parse(await r.text());
-    remoteVersion = Number(j.version) || 0;
-    console.log('remote version =', remoteVersion);
-  } else {
-    console.log('remote version fetch status', r.status);
+  remoteVersion = Number(local.version) || 0;
+} catch {}
+// 再向远端仓库读取真实版本，取两者较大值；失败不致命，重试 3 次
+for (let i = 0; i < 3; i++) {
+  try {
+    const r = await fetch(
+      `https://api.github.com/repos/${REPO}/contents/gkd.version.json?ref=main`,
+      {
+        headers: {
+          Accept: 'application/vnd.github.raw+json',
+          ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
+        },
+        signal: AbortSignal.timeout(15000),
+      },
+    );
+    if (r.ok) {
+      const j = JSON.parse(await r.text());
+      remoteVersion = Math.max(remoteVersion, Number(j.version) || 0);
+      console.log('remote version =', remoteVersion);
+      break;
+    }
+  } catch (e) {
+    if (i === 2) console.log('remote version unreadable, use local:', e.message);
+    await new Promise((res) => setTimeout(res, 1000));
   }
-} catch (e) {
-  console.log('remote version unreadable, fallback to 1:', e.message);
 }
 
 const VERSION =
