@@ -71,11 +71,14 @@ for (let i = 0; i < 3; i++) {
 
 const VERSION =
   Number(process.env.SUB_VERSION) || Math.max(1, remoteVersion + 1);
+// 防回退保险：历史发布的最高版本是 10，任何低于它的值都强制抬升
+const SAFE_MIN = 10;
+const version = Math.max(VERSION, SAFE_MIN);
 
 const sub = {
   id: 202611250930,
   name: process.env.SUB_NAME || '自用规则',
-  version: VERSION,
+  version: version,
   author: process.env.SUB_AUTHOR || 'local',
   updateUrl: process.env.SUB_URL || undefined,
   checkUpdateUrl: process.env.SUB_CHECK_URL || undefined,
