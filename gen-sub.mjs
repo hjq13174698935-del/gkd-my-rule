@@ -27,12 +27,7 @@ const kp = read('gkd-rules-kproduce/app-rule.json5');
 const xcf = read('gkd-rules-xiachufang/app-rule.json5');
 const fish = read('gkd-rules-idlefish/app-rule.json5');
 const glb = read('gkd-rules-global/global-rule.json5');
-
-// 全局规则里的 apps 追加已有专用规则的包
-const disabled = new Set(glb.apps.map((a) => a.id));
-for (const id of [kp.id, xcf.id, fish.id]) {
-  if (!disabled.has(id)) glb.apps.push({ id, enable: false });
-}
+// 全局组同时作用于专用应用（作为兜底）：不再自动追加 disable 列表
 
 // 版本号从远端仓库的 gkd.version.json 自动 +1（用 Node fetch，绕开 curl 的 schannel 问题）
 const TOKEN_FILE = path.join('D:\\', 'Harness', 'token.txt');

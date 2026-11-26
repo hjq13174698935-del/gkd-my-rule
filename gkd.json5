@@ -1,7 +1,7 @@
 {
   id: 202611250930,
   name: '自用规则',
-  version: 8,
+  version: 1,
   author: 'local',
   supportUri: 'https://gkd.li/',
   categories: [
@@ -54,7 +54,7 @@
     {
       key: 0,
       name: '开屏广告',
-      desc: '通用开屏广告跳过，匹配常见「跳过」文案与倒计时控件',
+      desc: '通用开屏广告跳过：匹配任意位置「跳过」文案与倒计时控件',
       order: -1,
       actionMaximum: 2,
       matchTime: 10000,
@@ -64,23 +64,28 @@
       rules: [
         {
           key: 0,
-          matches: '[text*="跳过"][text.length<10][visibleToUser=true]',
+          matches: '[visibleToUser=true][text*="跳过"][text.length<10][width<600]',
+          action: 'clickCenter',
         },
         {
           key: 1,
-          matches: '[childCount=0][visibleToUser=true][(text.length<10&&(text*="跳过"||text*="跳過"||text*="skip"||text*="Skip")) || id$="tt_splash_skip_btn" || vid*="skip" || vid*="Skip" || (vid*="count" && vid*="down" && vid!*="download") || desc*="跳过" || desc*="skip"]',
+          matches: '[visibleToUser=true][(text*="跳過"||text*="skip"||text*="Skip")][text.length<10][width<600]',
+          action: 'clickCenter',
         },
         {
           key: 2,
-          matches: '[text*="跳过广告"][text.length<10][visibleToUser=true]',
+          matches: '[visibleToUser=true][(desc*="跳过"||desc*="跳過"||desc*="skip")][width<600]',
+          action: 'clickCenter',
         },
         {
           key: 3,
-          matches: '[text^="跳过"][text.length<8][visibleToUser=true][width<300]',
+          matches: '[visibleToUser=true][(text*="跳过广告"||text*="跳过 广告")][text.length<12][width<600]',
+          action: 'clickCenter',
         },
         {
           key: 4,
-          matches: '[visibleToUser=true][(vid*="splash"&&vid*="skip")||(vid*="skip"&&vid*="splash")]',
+          matches: '[visibleToUser=true][(vid*="splash"&&vid*="skip")||(vid*="skip"&&vid*="splash")||(vid*="skip"&&vid*="count")||id$="tt_splash_skip_btn"]',
+          action: 'clickCenter',
         },
       ],
       apps: [
@@ -118,18 +123,6 @@
         },
         {
           id: 'com.mmbox.xbrowser',
-          enable: false,
-        },
-        {
-          id: 'com.kproduce.weight',
-          enable: false,
-        },
-        {
-          id: 'com.xiachufang',
-          enable: false,
-        },
-        {
-          id: 'com.taobao.idlefish',
           enable: false,
         },
       ],
